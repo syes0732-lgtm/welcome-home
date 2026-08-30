@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Welcome Home</title>
+<meta name="theme-color" content="#4C0619">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --burgundy:#710927;
+  --burgundy-dark:#4C0619;
+  --burgundy-light:#8C1936;
+  --gold:#B58C4F;
+  --gold-light:#D4B483;
+  --walnut:#92643E;
+  --walnut-dark:#5F4028;
+  --champagne:#D9C3A6;
+  --indigo:#2D2C4A;
+  --indigo-light:#454369;
+  --ivory:#F4F0E8;
+  --ivory-dim:#EAE3D4;
+  --ink:#2A2118;
+
+  --serif:'Cormorant Garamond','EB Garamond',Georgia,serif;
+  --display:'Playfair Display','Cormorant Garamond','EB Garamond',Georgia,serif;
+  --sans:'Jost',system-ui,-apple-system,sans-serif;
+
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family:var(--sans);
+  background:var(--ivory);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,p{ margin:0; }
+button{ font-family:inherit; cursor:pointer; }
+img,video{ max-width:100%; display:block; }
+a{ color:inherit; }
+
+.eyebrow{
+  font-family:var(--sans);
+  font-size:.72rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+
+/* focus visibility */
+button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+}
+
+/* ============================================================
+   OLD-MONEY ATMOSPHERE
+   ============================================================ */
+body{
+  background-color:var(--ivory);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(181,140,79,.075) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 80% 70%, rgba(95,64,40,.055) 0 1px, transparent 1.5px),
+    linear-gradient(rgba(76,6,25,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,6,25,.018) 1px, transparent 1px);
+  background-size:24px 24px, 31px 31px, 6px 6px, 6px 6px;
+}
+.screen-inner{ position:relative; }
+.screen-inner::before{
+  content:'♡';
+  position:absolute;
+  top:1.1rem; right:1.2rem;
+  color:var(--gold); opacity:.28;
+  font-family:var(--display); font-size:1.2rem;
+  pointer-events:none;
+}
+.nav-card-ornament{
+  font-family:var(--display);
+  font-size:1.45rem;
+  line-height:1;
+  transform:rotate(-8deg);
+}
+/* ============================================================
+   OPENING SCREEN
+   ============================================================ */
+#opening{
+  position:fixed; inset:0; z-index:1000;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(120% 90% at 50% -10%, var(--burgundy) 0%, var(--burgundy-dark) 55%, #38040F 100%);
+  color:var(--ivory);
+  text-align:center;
+  transition:opacity .9s var(--ease), visibility .9s var(--ease);
+}
+#opening.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+
+.opening-inner{
+  padding:2rem;
+  max-width:480px;
+  animation:openingRise 1.4s var(--ease) both;
+}
+@keyframes openingRise{
+  from{ opacity:0; transform:translateY(14px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.opening-kicker{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.05rem;
+  color:var(--champagne);
+  letter-spacing:.02em;
+  margin-bottom:1.6rem;
+  opacity:.9;
+}
+
+.opening-mark{
+  width:34px; height:1px; background:var(--gold);
+  margin:0 auto 1.6rem;
+}
+
+.opening-title{
+  font-family:var(--display);
+  font-weight:500;
+  line-height:1.02;
+  font-size:clamp(3.2rem, 12vw, 5.2rem);
+  letter-spacing:.03em;
+  color:var(--ivory);
+}
+.opening-title span{
+  display:block;
+  color:var(--gold-light);
+  font-size:.62em;
+  letter-spacing:.3em;
+  margin-top:.15em;
+}
+
+.opening-date{
+  margin-top:1.7rem;
+  font-family:var(--sans);
+  font-size:.78rem;
+  letter-spacing:.35em;
+  color:var(--champagne);
+  opacity:.75;
+}
+
+.enter-btn{
+  margin-top:2.6rem;
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--gold-light);
+  font-family:var(--sans);
+  font-size:.8rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  padding:.95rem 2.6rem;
+  border-radius:2px;
+  transition:background .35s var(--ease), color .35s var(--ease), letter-spacing .35s var(--ease);
+}
+.enter-btn:hover, .enter-btn:focus-visible{
+  background:var(--gold);
+  color:var(--burgundy-dark);
+  letter-spacing:.34em;
+}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+#app{
+  min-height:100vh;
+  min-height:100dvh;
+}
+
+.screen{ display:none; }
+.screen.active{
+  display:block;
+  animation:screenFade .55s var(--ease) both;
+}
+@keyframes screenFade{
+  from{ opacity:0; transform:translateY(8px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.screen-inner{
+  max-width:920px;
+  margin:0 auto;
+  padding:2.6rem 1.5rem 5rem;
+}
+
+.screen-header{
+  display:flex;
+  align-items:center;
+  gap:1.1rem;
+  margin-bottom:2.2rem;
+}
+
+.back-btn{
+  background:none;
+  border:none;
+  color:var(--burgundy);
+  font-family:var(--sans);
+  font-size:.82rem;
+  letter-spacing:.08em;
+  padding:.5rem .2rem;
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  transition:opacity .25s var(--ease), transform .25s var(--ease);
+}
+.back-btn:hover{ opacity:.65; transform:translateX(-2px); }
+
+.screen-title{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(1.7rem, 4vw, 2.3rem);
+  color:var(--burgundy-dark);
+}
+
+.screen-sub{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.05rem;
+  color:var(--walnut);
+  margin-top:.35rem;
+  max-width:52ch;
+}
+
+/* ============================================================
+   HOME
+   ============================================================ */
+#screen-home .screen-inner{ padding-top:3.6rem; }
+
+.home-greeting{ margin-bottom:2.8rem; }
+.home-title{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(2.1rem, 6vw, 3rem);
+  color:var(--burgundy-dark);
+}
+.home-sub{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.15rem;
+  color:var(--walnut);
+  margin-top:.5rem;
+}
+
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+  gap:1.1rem;
+}
+
+.nav-card{
+  position:relative;
+  background:#fff;
+  border:1px solid var(--ivory-dim);
+  border-radius:3px;
+  padding:1.6rem 1.5rem 1.5rem;
+  text-align:left;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+  box-shadow:0 1px 2px rgba(42,33,24,.04);
+  overflow:hidden;
+}
+.nav-card::before{
+  content:"";
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--gold), transparent 70%);
+  opacity:0; transition:opacity .3s var(--ease);
+}
+.nav-card:hover, .nav-card:focus-visible{
+  transform:translateY(-3px);
+  border-color:var(--gold-light);
+  box-shadow:0 10px 24px rgba(76,6,25,.09);
+}
+.nav-card:hover::before, .nav-card:focus-visible::before{ opacity:1; }
+
+.nav-card-ornament{
+  font-family:var(--serif);
+  color:var(--gold);
+  font-size:1.1rem;
+  margin-bottom:.7rem;
+  display:block;
+}
+.nav-card-title{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:1.4rem;
+  color:var(--ink);
+}
+.nav-card-desc{
+  font-family:var(--sans);
+  font-size:.85rem;
+  color:var(--walnut-dark);
+  margin-top:.4rem;
+  line-height:1.5;
+}
+
+.home-extra-link{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  margin-top:2.6rem;
+  background:none;
+  border:none;
+  font-family:var(--sans);
+  font-size:.78rem;
+  letter-spacing:.1em;
+  color:var(--indigo);
+  opacity:.75;
+  padding:.3rem 0;
+  border-bottom:1px solid transparent;
+  transition:opacity .25s var(--ease), border-color .25s var(--ease);
+}
+.home-extra-link:hover{ opacity:1; border-color:var(--indigo-light); }
+
+/* ============================================================
+   OPEN WHEN (letters)
+   ============================================================ */
+.letters-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+  gap:1.1rem;
+  margin-top:1rem;
+}
+
+.letter-card{
+  background:linear-gradient(180deg, #fff, var(--ivory) 130%);
+  border:1px solid var(--ivory-dim);
+  border-radius:2px;
+  padding:1.5rem 1.4rem;
+  text-align:left;
+  position:relative;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.letter-card:hover, .letter-card:focus-visible{
+  transform:translateY(-3px);
+  box-shadow:0 10px 22px rgba(76,6,25,.1);
+}
+.letter-card-mark{
+  color:var(--gold);
+  font-size:.9rem;
+  margin-bottom:.6rem;
+  display:block;
+}
+.letter-card-title{
+  font-family:var(--serif);
+  font-size:1.18rem;
+  font-weight:500;
+  color:var(--burgundy-dark);
+  line-height:1.35;
+}
+
+/* letter reading / video */
+.letter-paper{
+  background:#fff;
+  border:1px solid var(--ivory-dim);
+  border-radius:3px;
+  padding:2.2rem;
+  max-width:640px;
+  margin:0 auto;
+  box-shadow:0 20px 50px rgba(76,6,25,.08);
+}
+.letter-heading{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(1.5rem, 4vw, 2rem);
+  color:var(--burgundy-dark);
+  text-align:center;
+  margin-bottom:1.6rem;
+}
+
+.media-frame{
+  position:relative;
+  background:var(--ink);
+  border-radius:2px;
+  overflow:hidden;
+  aspect-ratio:16/9;
+}
+.media-frame video{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  background:#000;
+}
+.play-overlay{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(42,33,24,.28);
+  transition:opacity .3s var(--ease);
+  cursor:pointer;
+}
+.play-overlay.hidden{ opacity:0; pointer-events:none; }
+.play-icon{
+  width:62px; height:62px;
+  border-radius:50%;
+  border:1px solid rgba(244,240,232,.75);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--ivory);
+  background:rgba(76,6,25,.35);
+  backdrop-filter:blur(2px);
+}
+.play-icon svg{ width:20px; height:20px; margin-left:3px; }
+
+.video-controls{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.6rem;
+  margin-top:.8rem;
+}
+.vc-btn{
+  background:none;
+  border:1px solid var(--ivory-dim);
+  color:var(--walnut-dark);
+  font-family:var(--sans);
+  font-size:.74rem;
+  letter-spacing:.06em;
+  padding:.45rem .85rem;
+  border-radius:2px;
+  transition:background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
+}
+.vc-btn:hover{ background:var(--burgundy-dark); color:var(--ivory); border-color:var(--burgundy-dark); }
+
+.coming-soon{
+  display:none;
+  align-items:center; justify-content:center;
+  height:100%;
+  color:var(--champagne);
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.1rem;
+  text-align:center;
+  padding:1rem;
+}
+
+/* ============================================================
+   HEAR ME / MUSIC — shared player list
+   ============================================================ */
+.player-list{
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+  margin-top:1.2rem;
+}
+.track{
+  background:#fff;
+  border:1px solid var(--ivory-dim);
+  border-radius:2px;
+  padding:1rem 1.1rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+.track-play{
+  flex:0 0 auto;
+  width:42px; height:42px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  background:none;
+  color:var(--burgundy-dark);
+  display:flex; align-items:center; justify-content:center;
+  transition:background .25s var(--ease), color .25s var(--ease);
+}
+.track-play:hover{ background:var(--gold); }
+.track-play svg{ width:14px; height:14px; }
+
+.track-body{ flex:1; min-width:0; }
+.track-title{
+  font-family:var(--serif);
+  font-size:1.08rem;
+  color:var(--ink);
+  margin-bottom:.4rem;
+}
+.track-bar{
+  position:relative;
+  height:3px;
+  background:var(--ivory-dim);
+  border-radius:2px;
+  cursor:pointer;
+}
+.track-bar-fill{
+  position:absolute; left:0; top:0; bottom:0;
+  width:0%;
+  background:var(--gold);
+  border-radius:2px;
+}
+.track-times{
+  display:flex; justify-content:space-between;
+  font-size:.68rem; color:var(--walnut);
+  margin-top:.35rem;
+  letter-spacing:.03em;
+  font-variant-numeric:tabular-nums;
+}
+.track-missing{
+  font-size:.7rem;
+  color:var(--walnut);
+  opacity:.6;
+  font-style:italic;
+}
+
+/* ============================================================
+   TAKE A BREAK
+   ============================================================ */
+.break-wrap{
+  text-align:center;
+  padding-top:1.5rem;
+}
+.breath-circle{
+  width:150px; height:150px;
+  margin:2.4rem auto 2.6rem;
+  border-radius:50%;
+  border:1px solid var(--gold-light);
+  background:radial-gradient(circle at 50% 40%, var(--champagne) 0%, var(--ivory-dim) 75%);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif);
+  font-style:italic;
+  color:var(--walnut-dark);
+  font-size:1rem;
+  animation:breathe 8s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.12); }
+}
+@media (prefers-reduced-motion: reduce){
+  .breath-circle{ animation:none; }
+}
+
+.timer-display{
+  font-family:var(--serif);
+  font-size:3rem;
+  color:var(--burgundy-dark);
+  letter-spacing:.03em;
+  font-variant-numeric:tabular-nums;
+}
+
+.timer-controls{
+  display:flex;
+  gap:.7rem;
+  justify-content:center;
+  margin-top:1.6rem;
+  flex-wrap:wrap;
+}
+
+.pill-btn{
+  background:none;
+  border:1px solid var(--burgundy);
+  color:var(--burgundy);
+  font-family:var(--sans);
+  font-size:.78rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:.7rem 1.5rem;
+  border-radius:20px;
+  transition:background .25s var(--ease), color .25s var(--ease);
+}
+.pill-btn:hover{ background:var(--burgundy); color:var(--ivory); }
+.pill-btn.primary{ background:var(--burgundy); color:var(--ivory); }
+.pill-btn.primary:hover{ background:var(--burgundy-dark); }
+
+.timer-lengths{
+  margin-top:1.4rem;
+  display:flex;
+  gap:.5rem;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.len-btn{
+  background:none;
+  border:1px solid var(--ivory-dim);
+  color:var(--walnut-dark);
+  font-size:.75rem;
+  padding:.4rem .85rem;
+  border-radius:16px;
+  transition:border-color .25s var(--ease), color .25s var(--ease);
+}
+.len-btn.active, .len-btn:hover{ border-color:var(--gold); color:var(--burgundy-dark); }
+
+/* ============================================================
+   BRAIN DUMP
+   ============================================================ */
+.dump-note{
+  font-size:.78rem;
+  color:var(--walnut);
+  margin-bottom:1rem;
+  opacity:.85;
+}
+.dump-textarea{
+  width:100%;
+  min-height:320px;
+  resize:vertical;
+  border:1px solid var(--ivory-dim);
+  background:#fff;
+  border-radius:2px;
+  padding:1.3rem;
+  font-family:var(--serif);
+  font-size:1.15rem;
+  line-height:1.6;
+  color:var(--ink);
+}
+.dump-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:.9rem;
+}
+.dump-count{
+  font-size:.72rem;
+  color:var(--walnut);
+  opacity:.7;
+  letter-spacing:.04em;
+}
+.clear-btn{
+  background:none;
+  border:none;
+  color:var(--burgundy);
+  font-size:.78rem;
+  letter-spacing:.06em;
+  border-bottom:1px solid transparent;
+  transition:border-color .25s var(--ease);
+}
+.clear-btn:hover{ border-color:var(--burgundy); }
+
+.dump-save-row{
+  margin-top:1rem;
+  text-align:right;
+}
+
+.dump-notes-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-top:2.6rem;
+  margin-bottom:1rem;
+  border-top:1px solid var(--ivory-dim);
+  padding-top:1.6rem;
+}
+.dump-notes-title{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:1.3rem;
+  color:var(--burgundy-dark);
+}
+
+.dump-empty{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.05rem;
+  color:var(--walnut);
+  opacity:.75;
+  text-align:center;
+  padding:1.8rem 0;
+}
+
+.dump-notes-list{
+  display:flex;
+  flex-direction:column;
+  gap:.8rem;
+}
+
+.dump-note-card{
+  background:#fff;
+  border:1px solid var(--ivory-dim);
+  border-radius:2px;
+  padding:1.1rem 1.3rem;
+}
+.dump-note-text{
+  font-family:var(--serif);
+  font-size:1.08rem;
+  line-height:1.55;
+  color:var(--ink);
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.dump-note-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:.8rem;
+  padding-top:.7rem;
+  border-top:1px solid var(--ivory-dim);
+  font-size:.7rem;
+  letter-spacing:.03em;
+  color:var(--walnut);
+}
+.dump-note-actions{
+  display:flex;
+  gap:.9rem;
+}
+.dump-note-actions button{
+  background:none;
+  border:none;
+  color:var(--burgundy);
+  font-family:var(--sans);
+  font-size:.7rem;
+  letter-spacing:.05em;
+  padding:0;
+  border-bottom:1px solid transparent;
+  transition:border-color .2s var(--ease), opacity .2s var(--ease);
+}
+.dump-note-actions button:hover{ border-color:var(--burgundy); }
+
+.dump-note-edit{
+  width:100%;
+  min-height:110px;
+  font-family:var(--serif);
+  font-size:1.05rem;
+  line-height:1.5;
+  border:1px solid var(--gold-light);
+  border-radius:2px;
+  padding:.8rem .9rem;
+  color:var(--ink);
+  background:var(--ivory);
+  resize:vertical;
+}
+.dump-note-edit-actions{
+  display:flex;
+  gap:.6rem;
+  margin-top:.7rem;
+  justify-content:flex-end;
+}
+
+/* ============================================================
+   MUSIC extra intro
+   ============================================================ */
+.music-note{ font-size:.82rem; color:var(--walnut); margin-bottom:1.2rem; opacity:.85; }
+
+.music-add-form{
+  background:#fff;
+  border:1px solid var(--ivory-dim);
+  border-radius:2px;
+  padding:1.3rem 1.4rem;
+  margin-top:1rem;
+  margin-bottom:1.7rem;
+}
+.music-add-row{
+  display:flex;
+  gap:.7rem;
+  flex-wrap:wrap;
+}
+.music-add-row input{
+  flex:1;
+  min-width:180px;
+  border:1px solid var(--ivory-dim);
+  border-radius:2px;
+  padding:.75rem .85rem;
+  font-family:var(--sans);
+  font-size:.85rem;
+  color:var(--ink);
+  background:var(--ivory);
+}
+.music-add-row input::placeholder{ color:var(--walnut); opacity:.55; }
+.music-add-row input:focus{
+  outline:2px solid var(--gold);
+  outline-offset:1px;
+  border-color:var(--gold);
+}
+.music-add-actions{
+  margin-top:1rem;
+  text-align:right;
+}
+
+.music-empty{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.05rem;
+  color:var(--walnut);
+  opacity:.75;
+  text-align:center;
+  padding:1.6rem 0;
+}
+
+.music-list{
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+}
+.music-item{
+  background:#fff;
+  border:1px solid var(--ivory-dim);
+  border-radius:2px;
+  padding:1.2rem 1.3rem;
+}
+.music-item-title{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:1.18rem;
+  color:var(--burgundy-dark);
+  margin-bottom:.7rem;
+}
+.music-embed{
+  border-radius:2px;
+  overflow:hidden;
+  margin-bottom:.7rem;
+  background:var(--ivory-dim);
+}
+.music-embed iframe{ width:100%; border:0; display:block; }
+.music-embed.youtube{ aspect-ratio:16/9; }
+.music-embed.youtube iframe{ width:100%; height:100%; }
+.music-embed.spotify iframe{ height:152px; }
+.music-embed audio{ width:100%; display:block; }
+
+.music-open-link{
+  display:inline-block;
+  font-family:var(--sans);
+  font-size:.78rem;
+  letter-spacing:.04em;
+  color:var(--burgundy);
+  border-bottom:1px solid var(--gold-light);
+  padding-bottom:1px;
+  transition:color .2s var(--ease), border-color .2s var(--ease);
+}
+.music-open-link:hover{ color:var(--burgundy-dark); border-color:var(--gold); }
+
+.music-item-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:.8rem;
+  padding-top:.7rem;
+  border-top:1px solid var(--ivory-dim);
+}
+.music-item-actions{
+  display:flex;
+  gap:.9rem;
+}
+.music-item-actions button{
+  background:none;
+  border:none;
+  color:var(--burgundy);
+  font-family:var(--sans);
+  font-size:.7rem;
+  letter-spacing:.05em;
+  padding:0;
+  border-bottom:1px solid transparent;
+  transition:border-color .2s var(--ease);
+}
+.music-item-actions button:hover{ border-color:var(--burgundy); }
+
+.music-item-edit-row{
+  display:flex;
+  gap:.6rem;
+  flex-wrap:wrap;
+  margin-bottom:.7rem;
+}
+.music-item-edit-row input{
+  flex:1;
+  min-width:160px;
+  border:1px solid var(--gold-light);
+  border-radius:2px;
+  padding:.65rem .8rem;
+  font-family:var(--sans);
+  font-size:.82rem;
+  color:var(--ink);
+  background:var(--ivory);
+}
+.music-item-edit-actions{
+  display:flex;
+  gap:.6rem;
+  justify-content:flex-end;
+}
+
+/* ============================================================
+   LOVE
+   ============================================================ */
+.love-wrap{
+  text-align:center;
+  padding-top:1rem;
+}
+.love-card{
+  background:#fff;
+  border:1px solid var(--ivory-dim);
+  border-radius:3px;
+  padding:2.4rem 1.8rem;
+  max-width:560px;
+  margin:1.6rem auto 0;
+  min-height:140px;
+  display:flex; align-items:center; justify-content:center;
+}
+.love-message{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.4rem;
+  line-height:1.5;
+  color:var(--burgundy-dark);
+  animation:loveFade .5s var(--ease) both;
+}
+@keyframes loveFade{
+  from{ opacity:0; transform:translateY(6px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.love-press{
+  margin-top:2rem;
+  background:var(--burgundy);
+  color:var(--ivory);
+  border:none;
+  font-family:var(--sans);
+  font-size:.82rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  padding:1rem 2.3rem;
+  border-radius:2px;
+  transition:background .3s var(--ease);
+}
+.love-press:hover{ background:var(--burgundy-dark); }
+
+.love-secondary{
+  display:flex;
+  gap:.6rem;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:1.3rem;
+}
+.love-secondary button{
+  background:none;
+  border:1px solid var(--ivory-dim);
+  color:var(--walnut-dark);
+  font-size:.74rem;
+  letter-spacing:.06em;
+  padding:.55rem 1.1rem;
+  border-radius:16px;
+  transition:border-color .25s var(--ease), color .25s var(--ease);
+}
+.love-secondary button:hover{ border-color:var(--gold); color:var(--burgundy-dark); }
+
+.love-note-box{
+  max-width:520px;
+  margin:1.3rem auto 0;
+  padding:1.3rem 1.5rem;
+  background:var(--ivory-dim);
+  border-radius:2px;
+  font-family:var(--serif);
+  font-size:1.05rem;
+  line-height:1.6;
+  color:var(--ink);
+  display:none;
+  text-align:left;
+}
+.love-note-box.visible{ display:block; animation:screenFade .4s var(--ease) both; }
+
+.love-media{
+  max-width:420px;
+  margin:1.1rem auto 0;
+}
+.love-media img{ border-radius:2px; }
+.love-media-msg{
+  font-size:.78rem;
+  color:var(--walnut);
+  font-style:italic;
+  opacity:.75;
+}
+
+/* ============================================================
+   SECRET
+   ============================================================ */
+.secret-wrap{
+  text-align:center;
+  padding-top:2.5rem;
+}
+.secret-seal{
+  width:96px; height:96px;
+  margin:1rem auto 2rem;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, var(--burgundy-light), var(--burgundy-dark));
+  border:1px solid var(--gold);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold-light);
+  font-family:var(--serif);
+  font-size:1.6rem;
+  font-style:italic;
+  cursor:pointer;
+  transition:transform .3s var(--ease);
+}
+.secret-seal:hover{ transform:scale(1.05) rotate(-2deg); }
+
+.secret-content{
+  max-width:480px;
+  margin:0 auto;
+  display:none;
+}
+.secret-content.visible{
+  display:block;
+  animation:screenFade .6s var(--ease) both;
+}
+.secret-text{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.3rem;
+  line-height:1.65;
+  color:var(--indigo);
+}
+.secret-hint{
+  margin-top:1.2rem;
+  font-size:.78rem;
+  color:var(--walnut);
+  opacity:.7;
+}
+
+/* ============================================================
+   EXTRA / DRAWING
+   ============================================================ */
+.draw-intro{ margin-bottom:1.4rem; }
+.canvas-wrap{
+  background:var(--ivory-dim);
+  border:1px solid var(--gold-light);
+  border-radius:3px;
+  padding:.6rem;
+}
+#drawCanvas{
+  width:100%;
+  aspect-ratio:4/3;
+  display:block;
+  background:var(--ivory);
+  border-radius:2px;
+  touch-action:none;
+  cursor:crosshair;
+}
+
+.draw-toolbar{
+  display:flex;
+  align-items:center;
+  gap:.9rem;
+  flex-wrap:wrap;
+  margin-top:1.1rem;
+}
+.color-swatches{
+  display:flex;
+  gap:.5rem;
+}
+.swatch{
+  width:26px; height:26px;
+  border-radius:50%;
+  border:2px solid transparent;
+  padding:0;
+  transition:transform .2s var(--ease), border-color .2s var(--ease);
+}
+.swatch.active{ border-color:var(--burgundy-dark); transform:scale(1.12); }
+
+.draw-actions{
+  display:flex;
+  gap:.5rem;
+  margin-left:auto;
+  flex-wrap:wrap;
+}
+
+.send-row{
+  margin-top:1.6rem;
+  text-align:center;
+}
+.toast{
+  position:fixed;
+  bottom:1.6rem;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--burgundy-dark);
+  color:var(--ivory);
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1rem;
+  padding:.9rem 1.6rem;
+  border-radius:2px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .35s var(--ease), transform .35s var(--ease);
+  z-index:500;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+}
+.toast.visible{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:600px){
+  .screen-inner{ padding:2rem 1.1rem 4rem; }
+  .card-grid, .letters-grid{ grid-template-columns:1fr; }
+  .letter-paper{ padding:1.5rem; }
+  .track{ padding:.85rem .9rem; }
+  .breath-circle{ width:120px; height:120px; }
+  .timer-display{ font-size:2.4rem; }
+  .draw-actions{ margin-left:0; width:100%; justify-content:flex-start; }
+}
+
+
+
+/* ============================================================
+   FINAL PALETTE APPLICATION
+   ============================================================ */
+body{ background:var(--ivory); color:var(--ink); }
+
+.screen-title{ color:var(--burgundy) !important; }
+.screen-sub{ color:var(--walnut-dark); }
+
+/* Home cards: use the full palette instead of default white blocks. */
+.card-grid .nav-card{ color:var(--ink); }
+.card-grid .nav-card:nth-child(1){ background:var(--burgundy); color:var(--ivory); border-color:var(--burgundy); }
+.card-grid .nav-card:nth-child(2){ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+.card-grid .nav-card:nth-child(3){ background:var(--walnut); color:var(--ivory); border-color:var(--walnut); }
+.card-grid .nav-card:nth-child(4){ background:var(--champagne); color:var(--ink); border-color:var(--gold-light); }
+.card-grid .nav-card:nth-child(5){ background:var(--indigo); color:var(--ivory); border-color:var(--indigo); }
+.card-grid .nav-card:nth-child(6){ background:var(--burgundy-light); color:var(--ivory); border-color:var(--burgundy-light); }
+.card-grid .nav-card:nth-child(7){ background:var(--ivory-dim); color:var(--ink); border-color:var(--gold-light); }
+.card-grid .nav-card .nav-card-title,
+.card-grid .nav-card .nav-card-desc{ color:inherit; }
+.card-grid .nav-card .nav-card-ornament{ color:var(--gold-light); }
+.card-grid .nav-card:nth-child(2) .nav-card-ornament,
+.card-grid .nav-card:nth-child(4) .nav-card-ornament,
+.card-grid .nav-card:nth-child(7) .nav-card-ornament{ color:var(--burgundy); }
+
+/* Open-When cards */
+.letter-card{ background:var(--champagne); border-color:var(--gold-light); }
+.letter-card:nth-child(2n){ background:var(--ivory-dim); }
+.letter-card:nth-child(3n){ background:#ead4d9; border-color:var(--burgundy-light); }
+.letter-card-title{ color:var(--burgundy-dark); }
+.letter-card-mark{ color:var(--gold); }
+
+/* Letter video page */
+.letter-paper{ background:var(--ivory); border-color:var(--gold-light); }
+.letter-heading{ color:var(--burgundy); }
+.media-frame{ background:var(--indigo); border:1px solid var(--indigo-light); }
+.vc-btn{ border-color:var(--gold); color:var(--burgundy); }
+.vc-btn:hover{ background:var(--gold); color:var(--burgundy-dark); }
+
+/* Brain Dump: a real notebook area, with saved notes underneath. */
+.dump-textarea{ background:var(--champagne); border-color:var(--gold); box-shadow:inset 0 0 0 1px rgba(255,255,255,.25); }
+.dump-textarea:focus{ outline:2px solid var(--burgundy-light); outline-offset:2px; }
+.dump-note{ color:var(--walnut-dark); }
+.dump-notes-header{ border-color:var(--gold-light); }
+.dump-notes-title{ color:var(--burgundy); }
+.dump-note-card{ background:var(--ivory-dim); border-color:var(--gold-light); }
+.dump-note-meta{ border-color:var(--gold-light); }
+
+/* Music: unlimited dynamically-added songs. */
+.music-add-form{ background:var(--champagne); border-color:var(--gold); }
+.music-add-row input{ background:var(--ivory); border-color:var(--gold-light); }
+.music-item{ background:var(--ivory-dim); border-color:var(--gold-light); }
+.music-item-title{ color:var(--burgundy); }
+.music-embed{ background:var(--indigo); }
+.music-open-link{ color:var(--burgundy); border-color:var(--gold); }
+
+/* Buttons consistently use the palette. */
+.pill-btn.primary{ background:var(--burgundy); border-color:var(--burgundy); color:var(--ivory); }
+.pill-btn.primary:hover{ background:var(--burgundy-light); border-color:var(--burgundy-light); }
+.clear-btn{ color:var(--burgundy); }
+
+/* Keep the opening screen unmistakably on-brand. */
+#opening{ background:radial-gradient(120% 90% at 50% -10%, var(--burgundy-light) 0%, var(--burgundy-dark) 58%, var(--indigo) 100%); }
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     OPENING
+     ============================================================ -->
+<div id="opening">
+  <div class="opening-inner">
+    <p class="opening-kicker">a little place I made for you</p>
+    <div class="opening-mark"></div>
+    <h1 class="opening-title">WELCOME<span>HOME</span></h1>
+    <p class="opening-date">30 · 08 · 2026</p>
+    <button class="enter-btn" id="enterBtn" type="button">Enter</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     APP
+     ============================================================ -->
+<div id="app">
+
+  <!-- ============================================================
+       HOME
+       ============================================================ -->
+  <section id="screen-home" class="screen">
+    <div class="screen-inner">
+      <div class="home-greeting">
+        <h1 class="home-title">Welcome Home</h1>
+        <p class="home-sub">I'm glad you're here.</p>
+      </div>
+
+      <div class="card-grid">
+        <button class="nav-card" onclick="goto('letters')">
+          <span class="nav-card-ornament">♡</span>
+          <span class="nav-card-title">Open When</span>
+          <span class="nav-card-desc">things I wanted you to know</span>
+        </button>
+
+        <button class="nav-card" onclick="goto('hear-me')">
+          <span class="nav-card-ornament">♡</span>
+          <span class="nav-card-title">Hear Me</span>
+          <span class="nav-card-desc">when you want my voice</span>
+        </button>
+
+        <button class="nav-card" onclick="goto('break')">
+          <span class="nav-card-ornament">♡</span>
+          <span class="nav-card-title">Take a Break</span>
+          <span class="nav-card-desc">you don't have to do everything right now</span>
+        </button>
+
+        <button class="nav-card" onclick="goto('dump')">
+          <span class="nav-card-ornament">♡</span>
+          <span class="nav-card-title">Brain Dump</span>
+          <span class="nav-card-desc">your space</span>
+        </button>
+
+        <button class="nav-card" onclick="goto('music')">
+          <span class="nav-card-ornament">♡</span>
+          <span class="nav-card-title">Music</span>
+          <span class="nav-card-desc">a few things that remind me of you</span>
+        </button>
+
+        <button class="nav-card" onclick="goto('love')">
+          <span class="nav-card-ornament">♡</span>
+          <span class="nav-card-title">Love</span>
+          <span class="nav-card-desc">for whenever you need reminding</span>
+        </button>
+
+        <button class="nav-card" onclick="goto('secret')">
+          <span class="nav-card-ornament">♡</span>
+          <span class="nav-card-title">Secret</span>
+          <span class="nav-card-desc">something I hid for you</span>
+        </button>
+      </div>
+
+      <button class="home-extra-link" onclick="goto('extra')" type="button">+ send a little love</button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       OPEN WHEN (letters list)
+       ============================================================ -->
+  <section id="screen-letters" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+      <h2 class="screen-title">Open When</h2>
+      <p class="screen-sub">Some things are better said than written.</p>
+
+      <div class="letters-grid" id="lettersGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       OPEN WHEN — single letter / video reading
+       ============================================================ -->
+  <section id="screen-letter-reading" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+
+      <div class="letter-paper">
+        <div class="letter-heading" id="letterTitle">&nbsp;</div>
+
+        <div class="media-frame" id="letterVideoWrap">
+          <video id="letterVideo" playsinline preload="metadata">
+            <source src="" type="video/mp4">
+          </video>
+          <div class="play-overlay" id="playOverlay">
+            <span class="play-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </div>
+          <div class="coming-soon" id="videoComingSoon">Video coming soon.</div>
+        </div>
+
+        <div class="video-controls">
+          <button class="vc-btn" id="muteBtn" type="button">Mute</button>
+          <button class="vc-btn" id="fsBtn" type="button">Fullscreen</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HEAR ME
+       ============================================================ -->
+  <section id="screen-hear-me" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+      <h2 class="screen-title">Hear Me</h2>
+      <p class="screen-sub">When you want my voice.</p>
+
+      <div class="player-list" id="hearMeList"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAKE A BREAK
+       ============================================================ -->
+  <section id="screen-break" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+      <h2 class="screen-title">Take a Break</h2>
+      <p class="screen-sub">You don't have to do everything right now.</p>
+
+      <div class="break-wrap">
+        <div class="breath-circle">breathe</div>
+        <div class="timer-display" id="timerDisplay">03:00</div>
+
+        <div class="timer-lengths" id="timerLengths">
+          <button class="len-btn" data-mins="1">1 min</button>
+          <button class="len-btn active" data-mins="3">3 min</button>
+          <button class="len-btn" data-mins="5">5 min</button>
+          <button class="len-btn" data-mins="10">10 min</button>
+        </div>
+
+        <div class="timer-controls">
+          <button class="pill-btn primary" id="timerStartBtn" type="button">Start</button>
+          <button class="pill-btn" id="timerResetBtn" type="button">Reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BRAIN DUMP
+       ============================================================ -->
+  <section id="screen-dump" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+      <h2 class="screen-title">Brain Dump</h2>
+      <p class="screen-sub">Your space.</p>
+      <p class="dump-note">Saved notes stay only on this device, in this browser. Nothing is sent anywhere, and there's no account or login.</p>
+
+      <textarea class="dump-textarea" id="dumpArea" placeholder="Let it out..."></textarea>
+
+      <div class="dump-footer">
+        <span class="dump-count" id="dumpCount">0 characters</span>
+        <button class="clear-btn" id="dumpClearBtn" type="button">Clear</button>
+      </div>
+
+      <div class="dump-save-row">
+        <button class="pill-btn primary" id="dumpSaveBtn" type="button">Save Note</button>
+      </div>
+
+      <div class="dump-notes-header">
+        <h3 class="dump-notes-title">Saved Notes</h3>
+        <button class="clear-btn" id="dumpClearAllBtn" type="button">Clear All</button>
+      </div>
+
+      <p class="dump-empty" id="dumpEmptyMsg">Nothing here yet. Let it out.</p>
+      <div class="dump-notes-list" id="dumpNotesList"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MUSIC
+       ============================================================ -->
+  <section id="screen-music" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+      <h2 class="screen-title">Music</h2>
+      <p class="screen-sub">A few things that remind me of you.</p>
+
+      <div class="music-add-form">
+        <div class="music-add-row">
+          <input type="text" id="musicTitleInput" placeholder="Song title" maxlength="120">
+          <input type="url" id="musicUrlInput" placeholder="Link (YouTube, Spotify, or a direct audio link)" maxlength="500">
+        </div>
+        <div class="music-add-actions">
+          <button class="pill-btn primary" id="musicAddBtn" type="button">Add Song</button>
+        </div>
+      </div>
+
+      <p class="music-empty" id="musicEmptyMsg">Add the songs that remind me of you.</p>
+      <div class="music-list" id="musicSongList"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LOVE
+       ============================================================ -->
+  <section id="screen-love" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+      <h2 class="screen-title">Love</h2>
+      <p class="screen-sub">For whenever you need reminding.</p>
+
+      <div class="love-wrap">
+        <div class="love-card">
+          <p class="love-message" id="loveMessage">Press the button whenever you need reminding.</p>
+        </div>
+
+        <button class="love-press" id="lovePressBtn" type="button">Press for Love</button>
+
+        <div class="love-secondary">
+          <button id="loveNoteBtn" type="button">Love Note</button>
+          <button id="loveHearBtn" type="button">Hear It</button>
+          <button id="loveSeeBtn" type="button">See It</button>
+          <button id="loveMoreBtn" type="button">One More</button>
+        </div>
+
+        <div class="love-note-box" id="loveNoteBox">
+          There isn't a version of my day that doesn't have you somewhere in it. Even the ordinary parts feel like they belong to us. That's the part I wanted written down somewhere you could come back to.
+        </div>
+
+        <div class="love-media" id="loveMediaBox"></div>
+        <audio id="loveAudio" preload="none"></audio>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECRET
+       ============================================================ -->
+  <section id="screen-secret" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+      <h2 class="screen-title">Secret</h2>
+      <p class="screen-sub">Something I hid for you.</p>
+
+      <div class="secret-wrap">
+        <button class="secret-seal" id="secretSeal" type="button" aria-label="Open the secret">✦</button>
+        <p class="secret-hint" id="secretHint">tap the seal</p>
+
+        <div class="secret-content" id="secretContent">
+          <p class="secret-text">There's a real one of these waiting for you outside this screen — I just haven't told you where yet. Consider this your first clue: it's somewhere we've already been together.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXTRA / DRAWING — Send a Little Love
+       ============================================================ -->
+  <section id="screen-extra" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="back-btn" onclick="goto('home')">← Back</button>
+      </div>
+      <p class="eyebrow">Extra</p>
+      <h2 class="screen-title">Send a Little Love</h2>
+      <p class="screen-sub draw-intro">Draw something small. Send it my way.</p>
+
+      <div class="canvas-wrap">
+        <canvas id="drawCanvas"></canvas>
+      </div>
+
+      <div class="draw-toolbar">
+        <div class="color-swatches" id="colorSwatches"></div>
+        <div class="draw-actions">
+          <button class="vc-btn" id="undoBtn" type="button">Undo</button>
+          <button class="vc-btn" id="clearBtn" type="button">Clear</button>
+        </div>
+      </div>
+
+      <div class="send-row">
+        <button class="love-press" id="sendBtn" type="button">Send</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   JAVASCRIPT DATA
+   ============================================================ */
+
+const letters = [
+  {id:'bad-day',    title:"Open when you're having a bad day"},
+  {id:'stressed',   title:"Open when you're stressed"},
+  {id:'miss-me',    title:"Open when you miss me"},
+  {id:'cant-sleep', title:"Open when you can't sleep"},
+  {id:'motivation', title:"Open when you need motivation"},
+  {id:'happy',      title:"Open when you're happy"},
+  {id:'hug',        title:"Open when you need a hug"},
+];
+
+const hearMeTracks = [
+  {id:'good-morning', title:'Good morning', file:'media/audio/good-morning.mp3'},
+  {id:'good-night',   title:'Good night',   file:'media/audio/good-night.mp3'},
+  {id:'just-because', title:'Just because', file:'media/audio/just-because.mp3'},
+];
+
+const loveMessages = [
+  "You are the calmest part of my day.",
+  "I like you more than I let on, most days.",
+  "You make ordinary things feel like ours.",
+  "I'm proud of you, quietly, all the time.",
+  "You are worth choosing, again and again.",
+  "There is room here for exactly you.",
+  "I noticed something good about you today.",
+  "You don't have to earn this. You already have it.",
+  "I like the way you see the world.",
+  "You are allowed to rest. I've got this part.",
+  "Some days you are my favourite thought.",
+  "I meant it the first time, and I still do.",
+  "You make hard days feel survivable.",
+  "I'm glad you exist, specifically, exactly like this.",
+  "You are not too much. You are exactly enough.",
+  "I would choose this again, every time.",
+  "You are safe here. Always.",
+  "I like who I am when I'm with you.",
+  "Whatever today was, I'm still here.",
+  "You are loved on your good days and your bad ones.",
+  "I think about you more than you'd guess.",
+  "You are the kind of good I didn't expect.",
+  "This is just a small reminder. You're it for me.",
+  "However far apart, you're still my person.",
+];
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + name);
+  if(el){
+    el.classList.add('active');
+  } else {
+    document.getElementById('screen-home').classList.add('active');
+  }
+  window.scrollTo(0, 0);
+}
+
+function goto(name){
+  if(location.hash.slice(1) === name){
+    showScreen(name);
+  } else {
+    location.hash = name;
+  }
+}
+
+function handleHash(){
+  const raw = location.hash.slice(1) || 'home';
+
+  if(raw.indexOf('letter-reading:') === 0){
+    const id = raw.split(':')[1];
+    const letter = letters.find(l => l.id === id);
+    if(letter){
+      renderLetter(letter);
+      showScreen('letter-reading');
+    } else {
+      showScreen('home');
+    }
+    return;
+  }
+
+  showScreen(raw);
+}
+
+window.addEventListener('hashchange', handleHash);
+
+/* ============================================================
+   OPENING
+   ============================================================ */
+
+document.getElementById('enterBtn').addEventListener('click', () => {
+  document.getElementById('opening').classList.add('hidden');
+  if(!location.hash){
+    location.hash = 'home';
+  }
+});
+
+/* ============================================================
+   OPEN WHEN — render list
+   ============================================================ */
+
+const lettersGrid = document.getElementById('lettersGrid');
+letters.forEach(l => {
+  const card = document.createElement('button');
+  card.className = 'letter-card';
+  card.type = 'button';
+  card.innerHTML = '<span class="letter-card-mark">✦</span><span class="letter-card-title">' + l.title + '</span>';
+  card.addEventListener('click', () => {
+    location.hash = 'letter-reading:' + l.id;
+  });
+  lettersGrid.appendChild(card);
+});
+
+/* ============================================================
+   OPEN WHEN — single letter video behaviour
+   ============================================================ */
+
+const letterVideo = document.getElementById('letterVideo');
+const letterVideoSource = letterVideo.querySelector('source');
+const playOverlay = document.getElementById('playOverlay');
+const videoComingSoon = document.getElementById('videoComingSoon');
+const muteBtn = document.getElementById('muteBtn');
+const fsBtn = document.getElementById('fsBtn');
+
+function renderLetter(l){
+  document.getElementById('letterTitle').textContent = l.title;
+
+  videoComingSoon.style.display = 'none';
+  letterVideo.style.display = '';
+  playOverlay.classList.remove('hidden');
+
+  letterVideo.pause();
+  letterVideoSource.src = 'media/videos/' + l.id + '.mp4';
+  letterVideo.load();
+
+  muteBtn.textContent = letterVideo.muted ? 'Unmute' : 'Mute';
+}
+
+letterVideo.addEventListener('error', () => {
+  letterVideo.style.display = 'none';
+  playOverlay.classList.add('hidden');
+  videoComingSoon.style.display = 'flex';
+});
+
+function playLetterVideo(){
+  if(letterVideo.paused){
+    letterVideo.play().then(() => {
+      playOverlay.classList.add('hidden');
+    }).catch(() => {
+      /* playback blocked or file missing; overlay stays visible */
+    });
+  } else {
+    letterVideo.pause();
+    playOverlay.classList.remove('hidden');
+  }
+}
+
+playOverlay.addEventListener('click', playLetterVideo);
+letterVideo.addEventListener('click', playLetterVideo);
+letterVideo.addEventListener('ended', () => playOverlay.classList.remove('hidden'));
+
+function toggleMute(){
+  letterVideo.muted = !letterVideo.muted;
+  muteBtn.textContent = letterVideo.muted ? 'Unmute' : 'Mute';
+}
+muteBtn.addEventListener('click', toggleMute);
+
+function closeFsViewer(){
+  if(document.fullscreenElement){
+    document.exitFullscreen();
+  }
+}
+fsBtn.addEventListener('click', () => {
+  const frame = document.getElementById('letterVideoWrap');
+  if(document.fullscreenElement){
+    closeFsViewer();
+  } else if(frame.requestFullscreen){
+    frame.requestFullscreen();
+  } else if(letterVideo.webkitEnterFullscreen){
+    letterVideo.webkitEnterFullscreen();
+  }
+});
+
+/* ============================================================
+   HEAR ME / MUSIC — shared audio player builder
+   ============================================================ */
+
+function formatTime(sec){
+  if(!isFinite(sec) || isNaN(sec)) return '0:00';
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+let currentlyPlayingAudio = null;
+
+function buildPlayerList(containerId, tracks){
+  const container = document.getElementById(containerId);
+  tracks.forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'track';
+
+    const playBtn = document.createElement('button');
+    playBtn.className = 'track-play';
+    playBtn.type = 'button';
+    playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+
+    const body = document.createElement('div');
+    body.className = 'track-body';
+
+    const title = document.createElement('div');
+    title.className = 'track-title';
+    title.textContent = t.title;
+
+    const bar = document.createElement('div');
+    bar.className = 'track-bar';
+    const fill = document.createElement('div');
+    fill.className = 'track-bar-fill';
+    bar.appendChild(fill);
+
+    const times = document.createElement('div');
+    times.className = 'track-times';
+    const curTime = document.createElement('span');
+    curTime.textContent = '0:00';
+    const durTime = document.createElement('span');
+    durTime.textContent = '0:00';
+    times.appendChild(curTime);
+    times.appendChild(durTime);
+
+    body.appendChild(title);
+    body.appendChild(bar);
+    body.appendChild(times);
+
+    row.appendChild(playBtn);
+    row.appendChild(body);
+    container.appendChild(row);
+
+    const audio = new Audio();
+    audio.preload = 'none';
+    audio.src = t.file;
+
+    let missingNoted = false;
+    audio.addEventListener('error', () => {
+      if(!missingNoted){
+        missingNoted = true;
+        const missing = document.createElement('span');
+        missing.className = 'track-missing';
+        missing.textContent = 'Audio coming soon.';
+        title.appendChild(document.createTextNode(' '));
+        title.appendChild(missing);
+        playBtn.disabled = true;
+        playBtn.style.opacity = '.4';
+        playBtn.style.cursor = 'default';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      durTime.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      fill.style.width = pct + '%';
+      curTime.textContent = formatTime(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    });
+
+    playBtn.addEventListener('click', () => {
+      if(audio.paused){
+        if(currentlyPlayingAudio && currentlyPlayingAudio !== audio){
+          currentlyPlayingAudio.pause();
+        }
+        audio.play().catch(() => {});
+        currentlyPlayingAudio = audio;
+        playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+      }
+    });
+
+    audio.addEventListener('pause', () => {
+      playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    });
+    audio.addEventListener('play', () => {
+      playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+    });
+
+    bar.addEventListener('click', (e) => {
+      if(!audio.duration) return;
+      const rect = bar.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pct * audio.duration;
+    });
+  });
+}
+
+buildPlayerList('hearMeList', hearMeTracks);
+
+/* ============================================================
+   MUSIC — unlimited songs via link, persisted locally
+   ============================================================ */
+
+const MUSIC_KEY = 'musicSongs';
+const musicTitleInput = document.getElementById('musicTitleInput');
+const musicUrlInput = document.getElementById('musicUrlInput');
+const musicAddBtn = document.getElementById('musicAddBtn');
+const musicSongList = document.getElementById('musicSongList');
+const musicEmptyMsg = document.getElementById('musicEmptyMsg');
+
+let musicSongs = [];
+
+function loadMusicSongs(){
+  try{
+    const raw = localStorage.getItem(MUSIC_KEY);
+    musicSongs = raw ? JSON.parse(raw) : [];
+    if(!Array.isArray(musicSongs)) musicSongs = [];
+  }catch(e){
+    musicSongs = [];
+  }
+}
+
+function persistMusicSongs(){
+  try{ localStorage.setItem(MUSIC_KEY, JSON.stringify(musicSongs)); }catch(e){}
+}
+
+function parseMusicSource(url){
+  try{
+    const u = new URL(url);
+    const host = u.hostname.replace(/^www\./, '');
+
+    if(host === 'youtube.com' || host === 'm.youtube.com'){
+      const vid = u.searchParams.get('v');
+      if(vid) return { type:'youtube', embedUrl:'https://www.youtube.com/embed/' + vid };
+    }
+    if(host === 'youtu.be'){
+      const vid = u.pathname.slice(1);
+      if(vid) return { type:'youtube', embedUrl:'https://www.youtube.com/embed/' + vid };
+    }
+    if(host === 'open.spotify.com'){
+      const parts = u.pathname.split('/').filter(Boolean);
+      if(parts.length >= 2){
+        return { type:'spotify', embedUrl:'https://open.spotify.com/embed/' + parts[0] + '/' + parts[1] };
+      }
+    }
+    if(/\.(mp3|wav|ogg|m4a|aac)$/i.test(u.pathname)){
+      return { type:'audio', embedUrl:url };
+    }
+  }catch(e){}
+  return { type:'link', embedUrl:null };
+}
+
+function renderMusicSongs(){
+  musicSongList.innerHTML = '';
+
+  if(musicSongs.length === 0){
+    musicEmptyMsg.style.display = '';
+    return;
+  }
+  musicEmptyMsg.style.display = 'none';
+
+  musicSongs.slice().reverse().forEach(song => {
+    const item = document.createElement('div');
+    item.className = 'music-item';
+    renderMusicItemView(item, song);
+    musicSongList.appendChild(item);
+  });
+}
+
+function renderMusicItemView(item, song){
+  item.innerHTML = '';
+
+  const title = document.createElement('div');
+  title.className = 'music-item-title';
+  title.textContent = song.title;
+  item.appendChild(title);
+
+  const source = parseMusicSource(song.url);
+
+  if(source.type === 'youtube'){
+    const embed = document.createElement('div');
+    embed.className = 'music-embed youtube';
+    embed.innerHTML = '<iframe src="' + source.embedUrl + '" title="' + song.title.replace(/"/g,'&quot;') + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+    item.appendChild(embed);
+  } else if(source.type === 'spotify'){
+    const embed = document.createElement('div');
+    embed.className = 'music-embed spotify';
+    embed.innerHTML = '<iframe src="' + source.embedUrl + '" title="' + song.title.replace(/"/g,'&quot;') + '" allow="encrypted-media" loading="lazy"></iframe>';
+    item.appendChild(embed);
+  } else if(source.type === 'audio'){
+    const embed = document.createElement('div');
+    embed.className = 'music-embed';
+    const audioEl = document.createElement('audio');
+    audioEl.controls = true;
+    audioEl.preload = 'none';
+    audioEl.src = song.url;
+    embed.appendChild(audioEl);
+    item.appendChild(embed);
+  }
+
+  const link = document.createElement('a');
+  link.className = 'music-open-link';
+  link.href = song.url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = 'Open';
+  item.appendChild(link);
+
+  const meta = document.createElement('div');
+  meta.className = 'music-item-meta';
+
+  const spacer = document.createElement('span');
+
+  const actions = document.createElement('span');
+  actions.className = 'music-item-actions';
+
+  const editBtn = document.createElement('button');
+  editBtn.type = 'button';
+  editBtn.textContent = 'Edit';
+  editBtn.addEventListener('click', () => renderMusicItemEdit(item, song));
+
+  const delBtn = document.createElement('button');
+  delBtn.type = 'button';
+  delBtn.textContent = 'Delete';
+  delBtn.addEventListener('click', () => {
+    musicSongs = musicSongs.filter(s => s.id !== song.id);
+    persistMusicSongs();
+    renderMusicSongs();
+  });
+
+  actions.appendChild(editBtn);
+  actions.appendChild(delBtn);
+  meta.appendChild(spacer);
+  meta.appendChild(actions);
+  item.appendChild(meta);
+}
+
+function renderMusicItemEdit(item, song){
+  item.innerHTML = '';
+
+  const row = document.createElement('div');
+  row.className = 'music-item-edit-row';
+
+  const titleInput = document.createElement('input');
+  titleInput.type = 'text';
+  titleInput.value = song.title;
+  titleInput.maxLength = 120;
+
+  const urlInput = document.createElement('input');
+  urlInput.type = 'url';
+  urlInput.value = song.url;
+  urlInput.maxLength = 500;
+
+  row.appendChild(titleInput);
+  row.appendChild(urlInput);
+
+  const editActions = document.createElement('div');
+  editActions.className = 'music-item-edit-actions';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.type = 'button';
+  cancelBtn.className = 'clear-btn';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.addEventListener('click', () => renderMusicItemView(item, song));
+
+  const saveBtn = document.createElement('button');
+  saveBtn.type = 'button';
+  saveBtn.className = 'pill-btn primary';
+  saveBtn.textContent = 'Save';
+  saveBtn.addEventListener('click', () => {
+    const t = titleInput.value.trim();
+    const u = urlInput.value.trim();
+    if(t && u){
+      song.title = t;
+      song.url = u;
+      persistMusicSongs();
+    }
+    renderMusicSongs();
+  });
+
+  editActions.appendChild(cancelBtn);
+  editActions.appendChild(saveBtn);
+
+  item.appendChild(row);
+  item.appendChild(editActions);
+  titleInput.focus();
+}
+
+musicAddBtn.addEventListener('click', () => {
+  const title = musicTitleInput.value.trim();
+  const url = musicUrlInput.value.trim();
+  if(!title || !url) return;
+
+  const now = Date.now();
+  musicSongs.push({
+    id: 'song-' + now + '-' + Math.random().toString(36).slice(2, 7),
+    title: title,
+    url: url,
+    createdAt: now
+  });
+  persistMusicSongs();
+
+  musicTitleInput.value = '';
+  musicUrlInput.value = '';
+  musicTitleInput.focus();
+
+  renderMusicSongs();
+});
+
+loadMusicSongs();
+renderMusicSongs();
+
+/* ============================================================
+   TAKE A BREAK
+   ============================================================ */
+
+let breakSecondsTotal = 180;
+let breakSecondsLeft = breakSecondsTotal;
+let breakInterval = null;
+let breakRunning = false;
+
+const timerDisplay = document.getElementById('timerDisplay');
+const timerStartBtn = document.getElementById('timerStartBtn');
+const timerResetBtn = document.getElementById('timerResetBtn');
+const timerLengths = document.getElementById('timerLengths');
+
+function renderTimer(){
+  timerDisplay.textContent = formatTime(breakSecondsLeft).padStart ?
+    (Math.floor(breakSecondsLeft/60) + ':' + String(breakSecondsLeft%60).padStart(2,'0')) :
+    formatTime(breakSecondsLeft);
+  const m = Math.floor(breakSecondsLeft / 60);
+  const s = breakSecondsLeft % 60;
+  timerDisplay.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+renderTimer();
+
+timerStartBtn.addEventListener('click', () => {
+  if(breakRunning){
+    clearInterval(breakInterval);
+    breakRunning = false;
+    timerStartBtn.textContent = 'Start';
+    return;
+  }
+  breakRunning = true;
+  timerStartBtn.textContent = 'Pause';
+  breakInterval = setInterval(() => {
+    breakSecondsLeft--;
+    if(breakSecondsLeft <= 0){
+      breakSecondsLeft = 0;
+      clearInterval(breakInterval);
+      breakRunning = false;
+      timerStartBtn.textContent = 'Start';
+    }
+    renderTimer();
+  }, 1000);
+});
+
+timerResetBtn.addEventListener('click', () => {
+  clearInterval(breakInterval);
+  breakRunning = false;
+  timerStartBtn.textContent = 'Start';
+  breakSecondsLeft = breakSecondsTotal;
+  renderTimer();
+});
+
+timerLengths.addEventListener('click', (e) => {
+  const btn = e.target.closest('.len-btn');
+  if(!btn) return;
+  clearInterval(breakInterval);
+  breakRunning = false;
+  timerStartBtn.textContent = 'Start';
+  timerLengths.querySelectorAll('.len-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  breakSecondsTotal = parseInt(btn.dataset.mins, 10) * 60;
+  breakSecondsLeft = breakSecondsTotal;
+  renderTimer();
+});
+
+/* ============================================================
+   BRAIN DUMP
+   ============================================================ */
+
+const dumpArea = document.getElementById('dumpArea');
+const dumpCount = document.getElementById('dumpCount');
+const dumpClearBtn = document.getElementById('dumpClearBtn');
+const DUMP_KEY = 'welcomeHome_brainDump';
+
+try{
+  const saved = localStorage.getItem(DUMP_KEY);
+  if(saved) dumpArea.value = saved;
+}catch(e){}
+
+function updateDumpCount(){
+  dumpCount.textContent = dumpArea.value.length + ' characters';
+}
+updateDumpCount();
+
+let dumpSaveTimeout = null;
+dumpArea.addEventListener('input', () => {
+  updateDumpCount();
+  clearTimeout(dumpSaveTimeout);
+  dumpSaveTimeout = setTimeout(() => {
+    try{ localStorage.setItem(DUMP_KEY, dumpArea.value); }catch(e){}
+  }, 400);
+});
+
+dumpClearBtn.addEventListener('click', () => {
+  dumpArea.value = '';
+  updateDumpCount();
+  try{ localStorage.removeItem(DUMP_KEY); }catch(e){}
+  dumpArea.focus();
+});
+
+/* ---- Saved notes (persistent, separate from the draft above) ---- */
+
+const DUMP_NOTES_KEY = 'brainDumpNotes';
+const dumpSaveBtn = document.getElementById('dumpSaveBtn');
+const dumpClearAllBtn = document.getElementById('dumpClearAllBtn');
+const dumpNotesList = document.getElementById('dumpNotesList');
+const dumpEmptyMsg = document.getElementById('dumpEmptyMsg');
+
+let dumpNotes = [];
+
+function loadDumpNotes(){
+  try{
+    const raw = localStorage.getItem(DUMP_NOTES_KEY);
+    dumpNotes = raw ? JSON.parse(raw) : [];
+    if(!Array.isArray(dumpNotes)) dumpNotes = [];
+  }catch(e){
+    dumpNotes = [];
+  }
+}
+
+function persistDumpNotes(){
+  try{ localStorage.setItem(DUMP_NOTES_KEY, JSON.stringify(dumpNotes)); }catch(e){}
+}
+
+function formatNoteTimestamp(ts){
+  const d = new Date(ts);
+  const datePart = d.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+  const timePart = d.toLocaleTimeString(undefined, { hour:'numeric', minute:'2-digit' });
+  return datePart + ' \u00b7 ' + timePart;
+}
+
+function renderDumpNotes(){
+  dumpNotesList.innerHTML = '';
+
+  if(dumpNotes.length === 0){
+    dumpEmptyMsg.style.display = '';
+    return;
+  }
+  dumpEmptyMsg.style.display = 'none';
+
+  dumpNotes.slice().reverse().forEach(note => {
+    const card = document.createElement('div');
+    card.className = 'dump-note-card';
+    renderDumpNoteView(card, note);
+    dumpNotesList.appendChild(card);
+  });
+}
+
+function renderDumpNoteView(card, note){
+  card.innerHTML = '';
+
+  const textEl = document.createElement('div');
+  textEl.className = 'dump-note-text';
+  textEl.textContent = note.text;
+
+  const meta = document.createElement('div');
+  meta.className = 'dump-note-meta';
+
+  const dateSpan = document.createElement('span');
+  dateSpan.textContent = formatNoteTimestamp(note.updatedAt || note.createdAt);
+
+  const actions = document.createElement('span');
+  actions.className = 'dump-note-actions';
+
+  const editBtn = document.createElement('button');
+  editBtn.type = 'button';
+  editBtn.textContent = 'Edit';
+  editBtn.addEventListener('click', () => renderDumpNoteEdit(card, note));
+
+  const delBtn = document.createElement('button');
+  delBtn.type = 'button';
+  delBtn.textContent = 'Delete';
+  delBtn.addEventListener('click', () => {
+    dumpNotes = dumpNotes.filter(n => n.id !== note.id);
+    persistDumpNotes();
+    renderDumpNotes();
+  });
+
+  actions.appendChild(editBtn);
+  actions.appendChild(delBtn);
+  meta.appendChild(dateSpan);
+  meta.appendChild(actions);
+
+  card.appendChild(textEl);
+  card.appendChild(meta);
+}
+
+function renderDumpNoteEdit(card, note){
+  card.innerHTML = '';
+
+  const editArea = document.createElement('textarea');
+  editArea.className = 'dump-note-edit';
+  editArea.value = note.text;
+
+  const editActions = document.createElement('div');
+  editActions.className = 'dump-note-edit-actions';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.type = 'button';
+  cancelBtn.className = 'clear-btn';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.addEventListener('click', () => renderDumpNoteView(card, note));
+
+  const saveBtn = document.createElement('button');
+  saveBtn.type = 'button';
+  saveBtn.className = 'pill-btn primary';
+  saveBtn.textContent = 'Save';
+  saveBtn.addEventListener('click', () => {
+    const val = editArea.value.trim();
+    if(val){
+      note.text = val;
+      note.updatedAt = Date.now();
+      persistDumpNotes();
+    }
+    renderDumpNotes();
+  });
+
+  editActions.appendChild(cancelBtn);
+  editActions.appendChild(saveBtn);
+
+  card.appendChild(editArea);
+  card.appendChild(editActions);
+  editArea.focus();
+}
+
+dumpSaveBtn.addEventListener('click', () => {
+  const text = dumpArea.value.trim();
+  if(!text) return;
+
+  const now = Date.now();
+  dumpNotes.push({
+    id: 'note-' + now + '-' + Math.random().toString(36).slice(2, 7),
+    text: text,
+    createdAt: now,
+    updatedAt: now
+  });
+  persistDumpNotes();
+
+  dumpArea.value = '';
+  updateDumpCount();
+  try{ localStorage.removeItem(DUMP_KEY); }catch(e){}
+
+  renderDumpNotes();
+});
+
+dumpClearAllBtn.addEventListener('click', () => {
+  if(dumpNotes.length === 0) return;
+  const confirmed = window.confirm('Delete all saved notes? This cannot be undone.');
+  if(confirmed){
+    dumpNotes = [];
+    persistDumpNotes();
+    renderDumpNotes();
+  }
+});
+
+loadDumpNotes();
+renderDumpNotes();
+
+/* ============================================================
+   LOVE
+   ============================================================ */
+
+const loveMessageEl = document.getElementById('loveMessage');
+let lastLoveIndex = -1;
+
+function showRandomLoveMessage(){
+  let idx;
+  do{
+    idx = Math.floor(Math.random() * loveMessages.length);
+  } while(idx === lastLoveIndex && loveMessages.length > 1);
+  lastLoveIndex = idx;
+
+  loveMessageEl.style.animation = 'none';
+  void loveMessageEl.offsetWidth;
+  loveMessageEl.style.animation = '';
+  loveMessageEl.textContent = loveMessages[idx];
+}
+
+document.getElementById('lovePressBtn').addEventListener('click', showRandomLoveMessage);
+document.getElementById('loveMoreBtn').addEventListener('click', showRandomLoveMessage);
+
+const loveNoteBox = document.getElementById('loveNoteBox');
+document.getElementById('loveNoteBtn').addEventListener('click', () => {
+  loveNoteBox.classList.toggle('visible');
+});
+
+const loveAudio = document.getElementById('loveAudio');
+document.getElementById('loveHearBtn').addEventListener('click', () => {
+  if(!loveAudio.src){
+    loveAudio.src = 'media/audio/love-note.mp3';
+  }
+  loveAudio.play().catch(() => {
+    showToast('Voice note coming soon.');
+  });
+});
+loveAudio.addEventListener('error', () => {
+  showToast('Voice note coming soon.');
+});
+
+const loveMediaBox = document.getElementById('loveMediaBox');
+document.getElementById('loveSeeBtn').addEventListener('click', () => {
+  loveMediaBox.innerHTML = '';
+  const img = document.createElement('img');
+  img.src = 'media/images/love.jpg';
+  img.alt = '';
+  img.onerror = () => {
+    loveMediaBox.innerHTML = '<p class="love-media-msg">Photo coming soon.</p>';
+  };
+  loveMediaBox.appendChild(img);
+});
+
+/* ============================================================
+   SECRET
+   ============================================================ */
+
+const secretSeal = document.getElementById('secretSeal');
+const secretContent = document.getElementById('secretContent');
+const secretHint = document.getElementById('secretHint');
+
+secretSeal.addEventListener('click', () => {
+  const opening = !secretContent.classList.contains('visible');
+  secretContent.classList.toggle('visible');
+  secretHint.style.display = opening ? 'none' : '';
+});
+
+/* ============================================================
+   EXTRA / DRAWING
+   ============================================================ */
+
+const canvas = document.getElementById('drawCanvas');
+const ctx = canvas.getContext('2d');
+const colorSwatches = document.getElementById('colorSwatches');
+const undoBtn = document.getElementById('undoBtn');
+const clearBtn = document.getElementById('clearBtn');
+const sendBtn = document.getElementById('sendBtn');
+
+const drawColors = [
+  {name:'Burgundy', hex:'#710927'},
+  {name:'Gold', hex:'#B58C4F'},
+  {name:'Indigo', hex:'#2D2C4A'},
+  {name:'Walnut', hex:'#92643E'},
+  {name:'Ink', hex:'#2A2118'},
+];
+
+let currentColor = drawColors[0].hex;
+let drawing = false;
+let undoStack = [];
+
+function setupCanvas(){
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  const prevImage = canvas.width > 0 ? canvas.toDataURL() : null;
+
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  ctx.fillStyle = '#F4F0E8';
+  ctx.fillRect(0, 0, rect.width, rect.height);
+
+  if(prevImage){
+    const img = new Image();
+    img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+    img.src = prevImage;
+  }
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 4;
+}
+
+window.addEventListener('resize', () => {
+  if(document.getElementById('screen-extra').classList.contains('active')){
+    setupCanvas();
+  }
+});
+
+drawColors.forEach((c, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'swatch' + (i === 0 ? ' active' : '');
+  btn.style.background = c.hex;
+  btn.type = 'button';
+  btn.setAttribute('aria-label', c.name);
+  btn.addEventListener('click', () => {
+    currentColor = c.hex;
+    colorSwatches.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+  });
+  colorSwatches.appendChild(btn);
+});
+
+function pushUndoState(){
+  undoStack.push(canvas.toDataURL());
+  if(undoStack.length > 25) undoStack.shift();
+}
+
+function getPos(e){
+  const rect = canvas.getBoundingClientRect();
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+
+canvas.addEventListener('pointerdown', (e) => {
+  pushUndoState();
+  drawing = true;
+  const pos = getPos(e);
+  ctx.strokeStyle = currentColor;
+  ctx.beginPath();
+  ctx.moveTo(pos.x, pos.y);
+  canvas.setPointerCapture(e.pointerId);
+});
+
+canvas.addEventListener('pointermove', (e) => {
+  if(!drawing) return;
+  const pos = getPos(e);
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+});
+
+function stopDrawing(){ drawing = false; }
+canvas.addEventListener('pointerup', stopDrawing);
+canvas.addEventListener('pointercancel', stopDrawing);
+canvas.addEventListener('pointerleave', stopDrawing);
+
+undoBtn.addEventListener('click', () => {
+  if(undoStack.length === 0) return;
+  const last = undoStack.pop();
+  const rect = canvas.getBoundingClientRect();
+  const img = new Image();
+  img.onload = () => {
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    ctx.drawImage(img, 0, 0, rect.width, rect.height);
+  };
+  img.src = last;
+});
+
+clearBtn.addEventListener('click', () => {
+  pushUndoState();
+  const rect = canvas.getBoundingClientRect();
+  ctx.fillStyle = '#F4F0E8';
+  ctx.fillRect(0, 0, rect.width, rect.height);
+});
+
+sendBtn.addEventListener('click', () => {
+  showToast('Sent. He\u2019ll love it.');
+});
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+
+let toastTimeout = null;
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('visible');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove('visible'), 2600);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+
+handleHash();
+
+// set up the drawing canvas the first time its screen becomes active
+const extraObserver = new MutationObserver(() => {
+  if(document.getElementById('screen-extra').classList.contains('active')){
+    setupCanvas();
+  }
+});
+extraObserver.observe(document.getElementById('screen-extra'), { attributes:true, attributeFilter:['class'] });
+
+// register service worker for offline/PWA support
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
